@@ -1,7 +1,14 @@
 from muvidtask import app, Employee
-from flask import  jsonify
+from flask import  jsonify, render_template
+
+
 
 # API Endpoints
+
+@app.route('/')
+def home():
+    return render_template('main.html')
+
 @app.route('/employees', methods=['GET'])
 def get_all_employees():
     employees = Employee.query.all()
@@ -60,7 +67,6 @@ def get_departments():
     department_list = [department[0] for department in departments]
     return jsonify(departments=department_list)
 
-# GET /departments/<string:name>
 @app.route('/departments/<string:name>', methods=['GET'])
 def get_employees_by_department(name):
     employees = Employee.query.filter_by(department=name).all()
